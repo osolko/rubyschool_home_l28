@@ -18,8 +18,7 @@ configure do
     @db.execute 'CREATE TABLE IF NOT EXISTS `Posts` (
                     `id` INTEGER  PRIMARY KEY AUTOINCREMENT,
                     `create_date` DATE,
-                    `content` TEXT
-                )'
+                    `content` TEXT )'
 end
 
 get '/' do
@@ -32,10 +31,16 @@ end
 
 post '/new' do
   content = params[:textnewpost]
-  erb "your post is : #{content}"
+  
+    if content.length <= 0
+        @error = "Post can't be empty"
+        erb :new
+    else
+        erb "your post is : #{content}"
+
+    end
+  
 end
 
 # comments
 # comments
-
-
