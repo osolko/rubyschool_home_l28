@@ -23,10 +23,12 @@ end
 
 get '/' do
     
-    @resusts = @db.execute 'select * from Posts ORDER BY id DESC'
-    
+    @results = @db.execute 'select * from Posts ORDER BY id DESC'
     erb :index
+    
 end
+
+
 
 get '/new' do
   erb :new
