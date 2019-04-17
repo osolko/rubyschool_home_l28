@@ -36,8 +36,8 @@ post '/new' do
         @error = "Post can't be empty"
         erb :new
     else
+        @db.execute 'INSERT INTO `Posts` (content, create_date) VALUES (?, datetime())',[content]
         erb "your post is : #{content}"
-
     end
   
 end
