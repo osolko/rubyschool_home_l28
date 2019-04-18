@@ -15,17 +15,19 @@ end
 
 configure do
     init_db
-    @db.execute 'CREATE TABLE IF NOT EXISTS `Posts` (
+    @db.execute 'CREATE TABLE IF NOT EXISTS Posts (
                                                     id INTEGER  PRIMARY KEY AUTOINCREMENT,
                                                     create_date` DATE,
                                                     content` TEXT )'
     
-    @db.execute 'CREATE TABLE IF NOT EXISTS `Comments` (
+    @db.execute 'CREATE TABLE IF NOT EXISTS Comments (
                                                     id INTEGER  PRIMARY KEY AUTOINCREMENT,
                                                     create_date DATE,
                                                     content TEXT,
                                                     post_id INTEGER )'
 end
+
+
 
 get '/' do
     
@@ -34,23 +36,26 @@ get '/' do
     
 end
 
+
+
 get '/new' do
   erb :new
 end
 
 post '/new' do
-  content = params[:textnewpost]
+  content = params[:content]
     if content.length <= 0
         @error = "Post can't be empty"
         erb :new
     else
-        @db.execute 'INSERT INTO `Posts` (content, create_date) VALUES (?, datetime())',[content]
+        @db.execute 'INSERT INTO Posts (content, create_date) VALUES (?, datetime())',[content]
         
         # redirect to main after post created
         redirect to '/'
         #    erb "your post is : #{content}"
     end
 end
+
 
 
 # show post info
@@ -64,24 +69,16 @@ get '/details/:post_id' do
     erb :details
 end
 
+
+
 # обробляємо пост запит details ^ відправка даних на сервер
 post '/details/:post_id' do
-    post_id= params[:post_id]
-    content = params[:newcomment]
-        if content.length <= 0
-        @error = "Comments can't be empty"
-        erb :new
-        else
-        @db.execute 'INSERT INTO `Comments` (content, create_date) VALUES (?, datetime())',[content]
-        
-        # redirect to main after post created
-        redirect to '/'
-        #    erb "your post is : #{content}"
-        end
+    post_id = params[:post_id]
+    content = params[:content]
+      
+    @db.execute 'INSERT INTO Comments (content, create_date, post_id) VALUES (?, datetime(), ?)', [content, post_id]
 
-    erb "your commentsis : #{content} for post #{post_id}"
-     
-
+    erb "your comments is : #{content} for post #{post_id}"
 end
 
 
