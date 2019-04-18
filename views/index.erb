@@ -1,9 +1,12 @@
 <h3> Last posts </h3>
-
+<br/>
 <% @results.each do |post| %>
 	<p>
-	hello
+	<%= post['content'] %>
+	<br/>
+	<%= post['create_date'] %>
 	</p>
+	<hr/>
 <% end %>
 
 
