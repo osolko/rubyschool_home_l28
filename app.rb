@@ -61,14 +61,15 @@ end
 # show post info
 get '/details/:post_id' do
 
-#отримуємо переміннуз з урл    
+    # отримуємо переміннуз з урл    
     post_id= params[:post_id]
-# отримуємо список постів по айді    
+
+    # отримуємо список постів по айді    
     results = @db.execute 'select * from Posts where id =?', [post_id]
     @row = results[0]
 
-#вивід коментарів під постом
-    @comments = @db.execute 'select * from coments where post_id= ? ORDER BY id', [post_id]
+    # вивід коментарів під постом
+    @comments = @db.execute 'select * from Comments where post_id= ? ORDER BY id', [post_id]
 
     erb :details
 end
@@ -77,6 +78,7 @@ end
 
 # обробляємо пост запит details ^ відправка даних на сервер
 post '/details/:post_id' do
+    
     post_id = params[:post_id]
     content = params[:content]
       
