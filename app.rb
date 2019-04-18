@@ -60,11 +60,15 @@ end
 
 # show post info
 get '/details/:post_id' do
+
 #отримуємо переміннуз з урл    
     post_id= params[:post_id]
 # отримуємо список постів по айді    
     results = @db.execute 'select * from Posts where id =?', [post_id]
     @row = results[0]
+
+#вивід коментарів під постом
+    @comments = @db.execute 'select * from coments where post_id= ? ORDER BY id', [post_id]
 
     erb :details
 end
@@ -78,7 +82,9 @@ post '/details/:post_id' do
       
     @db.execute 'INSERT INTO Comments (content, create_date, post_id) VALUES (?, datetime(), ?)', [content, post_id]
 
-    erb "your comments is : #{content} for post #{post_id}"
+    redirect to ('/details/' + post_id)
+
+   # erb "your comments is : #{content} for post #{post_id}"
 end
 
 
