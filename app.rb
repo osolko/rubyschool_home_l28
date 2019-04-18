@@ -42,7 +42,10 @@ post '/new' do
         erb :new
     else
         @db.execute 'INSERT INTO `Posts` (content, create_date) VALUES (?, datetime())',[content]
-        erb "your post is : #{content}"
+        
+        # redirect to main after post created
+        redirect to '/'
+        #    erb "your post is : #{content}"
     end
   
 end
