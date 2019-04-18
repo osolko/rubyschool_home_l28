@@ -28,8 +28,6 @@ get '/' do
     
 end
 
-
-
 get '/new' do
   erb :new
 end
@@ -47,8 +45,12 @@ post '/new' do
         redirect to '/'
         #    erb "your post is : #{content}"
     end
-  
 end
 
-# comments
-# comments
+# show post info
+get '/details/:post_id' do
+    post_id= params[:post_id]
+    
+    erb "show post by id #{post_id}"
+end
+
