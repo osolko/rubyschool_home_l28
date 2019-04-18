@@ -1,23 +1,24 @@
-<h4> POST DETAILS: </h4>
+<h3> POST DETAILS: </h3>
 <br/>
 <p>
         <%= @row['content'] %>
     <br/>
     <br/>
-    Added at:    <%= @row['create_date'] %>
+    Added at: <%= @row['create_date'] %>
 </p>
 
 <br/>
 <br/>
 
-<h3>All coments:</h3>
+<h4>All post comments:</h4>
 <p> 
-	<% @comments.each do |row| %>
+	<% @comments.each do |com| %>
 		<p>
-	        <%= row['content'] %>
-	    <br/>
-	    <br/>
+	        <%= com['content'] %>
+	        <br/>
+	        <span style="font-size:75%">added:  <%= com['create_date'] %> </span>
 		</p>
+
 		<hr/>
 	<% end %>	
 </p>
