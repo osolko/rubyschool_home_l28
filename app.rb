@@ -16,9 +16,15 @@ end
 configure do
     init_db
     @db.execute 'CREATE TABLE IF NOT EXISTS `Posts` (
-                    `id` INTEGER  PRIMARY KEY AUTOINCREMENT,
-                    `create_date` DATE,
-                    `content` TEXT )'
+                                                    id INTEGER  PRIMARY KEY AUTOINCREMENT,
+                                                    create_date` DATE,
+                                                    content` TEXT )'
+    
+    @db.execute 'CREATE TABLE IF NOT EXISTS `Comments` (
+                                                    id INTEGER  PRIMARY KEY AUTOINCREMENT,
+                                                    create_date DATE,
+                                                    content TEXT,
+                                                    post_id INTEGER )'
 end
 
 get '/' do
@@ -62,6 +68,16 @@ end
 post '/details/:post_id' do
     post_id= params[:post_id]
     content = params[:newcomment]
+        if content.length <= 0
+        @error = "Comments can't be empty"
+        erb :new
+        else
+        @db.execute 'INSERT INTO `Comments` (content, create_date) VALUES (?, datetime())',[content]
+        
+        # redirect to main after post created
+        redirect to '/'
+        #    erb "your post is : #{content}"
+        end
 
     erb "your commentsis : #{content} for post #{post_id}"
      
