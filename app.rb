@@ -34,7 +34,6 @@ end
 
 post '/new' do
   content = params[:textnewpost]
-  
     if content.length <= 0
         @error = "Post can't be empty"
         erb :new
@@ -47,12 +46,26 @@ post '/new' do
     end
 end
 
+
 # show post info
 get '/details/:post_id' do
+#отримуємо переміннуз з урл    
     post_id= params[:post_id]
-        results = @db.execute 'select * from Posts where id =?', [post_id]
-        @row = results[0]
-    
+# отримуємо список постів по айді    
+    results = @db.execute 'select * from Posts where id =?', [post_id]
+    @row = results[0]
+
     erb :details
 end
+
+# обробляємо пост запит details ^ відправка даних на сервер
+post '/details/:post_id' do
+    post_id= params[:post_id]
+    content = params[:newcomment]
+
+    erb "your commentsis : #{content} for post #{post_id}"
+     
+
+end
+
 
