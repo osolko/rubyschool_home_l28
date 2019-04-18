@@ -1,5 +1,4 @@
-<h4> POST DETAILS </h4>
-
+<h4> POST DETAILS: </h4>
 <br/>
 <p>
         <%= @row['content'] %>
@@ -7,5 +6,19 @@
     <br/>
     Added at:    <%= @row['create_date'] %>
 </p>
+
+
+
+<h5>Comments</h5>
+<p>
+	<form action="/details/<%= @row['id'] %>" method="POST">
+		<textarea name="textnewcomment" class="form-control" rows="6" placeholder="Comments text here" ></textarea>
+		<br/>
+		<button type="submit" class="btn btn-primary">Add comment</button>
+
+	</form>
+
+</p>
+
 
 
