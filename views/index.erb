@@ -2,9 +2,12 @@
 <br/>
 <% @results.each do |post| %>
 	<p>
-	<%= post['content'] %>
-	<br/>
-	<%= post['create_date'] %>
+        <%= post['content'] %>
+    <br/>
+        <%= post['create_date'] %>
+    <br/>
+    <br/>
+        <a href='/post/<%= post['id'] %>'>Comments</a>
 	</p>
 	<hr/>
 <% end %>
