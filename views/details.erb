@@ -1,7 +1,7 @@
 <h3> POST DETAILS: </h3>
 <br/>
 <p>
-        <%= @row['content'] %>
+    <%= @row['content'] %>
     <br/>
     <br/>
     Added at: <%= @row['create_date'] %>
@@ -23,12 +23,12 @@
 	<% end %>	
 </p>
 
-
 <br/>
 <h5>Comments</h5>
 <p>
 	<form action="/details/<%= @row['id'] %>" method="POST">
 		<textarea name="content" class="form-control" rows="6" placeholder="Comments text here" ></textarea>
+		<br/>
 		<br/>
 		<button type="submit" class="btn btn-primary">Add comment</button>
 	</form>

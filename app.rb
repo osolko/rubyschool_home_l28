@@ -15,16 +15,15 @@ end
 
 configure do
     init_db
-    @db.execute 'CREATE TABLE IF NOT EXISTS Posts (
-                                                    id INTEGER  PRIMARY KEY AUTOINCREMENT,
-                                                    create_date` DATE,
-                                                    content` TEXT )'
-    
-    @db.execute 'CREATE TABLE IF NOT EXISTS Comments (
-                                                    id INTEGER  PRIMARY KEY AUTOINCREMENT,
+    @db.execute 'CREATE TABLE IF NOT EXISTS Posts (          id INTEGER  PRIMARY KEY AUTOINCREMENT,
                                                     create_date DATE,
-                                                    content TEXT,
-                                                    post_id INTEGER )'
+                                                        content TEXT,
+                                                         author TEXT)'
+    
+    @db.execute 'CREATE TABLE IF NOT EXISTS Comments (           id INTEGER  PRIMARY KEY AUTOINCREMENT,
+                                                        create_date DATE,
+                                                            content TEXT,
+                                                            post_id INTEGER )'
 end
 
 
@@ -44,11 +43,12 @@ end
 
 post '/new' do
   content = params[:content]
+  author  = params[:author]
     if content.length <= 0
         @error = "Post can't be empty"
         erb :new
     else
-        @db.execute 'INSERT INTO Posts (content, create_date) VALUES (?, datetime())',[content]
+        @db.execute 'INSERT INTO Posts (content, create_date, author) VALUES (?, datetime(),?)',[content, author]
         
         # redirect to main after post created
         redirect to '/'
@@ -82,11 +82,21 @@ post '/details/:post_id' do
     post_id = params[:post_id]
     content = params[:content]
       
-    @db.execute 'INSERT INTO Comments (content, create_date, post_id) VALUES (?, datetime(), ?)', [content, post_id]
+  #  redirect to ('/details/' + post_id)
 
-    redirect to ('/details/' + post_id)
+    if content.length <= 0
+        @error = "Comment can't be empty"
 
-   # erb "your comments is : #{content} for post #{post_id}"
+        redirect to ('/details/' + post_id)
+        
+    else
+        @db.execute 'INSERT INTO Comments (content, create_date, post_id) VALUES (?, datetime(), ?)', [content, post_id]
+        
+        redirect to ('/details/' + post_id)
+    end
+
+
 end
 
+#
 
